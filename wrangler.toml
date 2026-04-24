@@ -1,0 +1,22 @@
+name = "nvproxyjs"
+main = "index.js"
+compatibility_date = "2024-01-01"
+
+[vars]
+# 密钥配置前缀
+KEY_PREFIX = "NV_KEY_"
+# 密钥数量
+KEY_COUNT = "3"
+# 最大并发数
+MAX_CONCURRENCY = "2"
+# 最大 Token 数量（0 表示不限制）
+MAXTOKEN = "0"
+
+# 环境变量配置
+# 在部署前使用 wrangler secret put 命令设置以下密钥：
+# NV_KEY_1, NV_KEY_2, NV_KEY_3 - NVIDIA API 密钥
+# TOKEN_1, TOKEN_2 - 访问鉴权 Token（可选）
+
+# [[kv_namespaces]]
+# binding = "KV_NAMESPACE"
+# id = "your_kv_namespace_id"
