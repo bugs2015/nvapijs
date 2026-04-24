@@ -2,13 +2,16 @@
   "name": "nvproxyjs",
   "version": "1.0.0",
   "description": "A high-performance NVIDIA API proxy service built on Cloudflare Workers",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
-    "dev": "wrangler dev",
+    "start": "node server.js",
+    "dev": "node server.js",
     "deploy": "wrangler deploy",
     "deploy:production": "wrangler deploy --env production",
     "tail": "wrangler tail",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "node test.js",
+    "docker:build": "docker build -t nvproxyjs .",
+    "docker:run": "docker run -p 3000:3000 --env-file .env nvproxyjs"
   },
   "keywords": [
     "nvidia",
@@ -22,9 +25,10 @@
   ],
   "author": "",
   "license": "MIT",
-  "devDependencies": {
-    "wrangler": "^3.0.0"
+  "dependencies": {
+    "wrangler": "^3.78.0"
   },
+  "devDependencies": {},
   "engines": {
     "node": ">=16.0.0"
   },

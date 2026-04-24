@@ -14,12 +14,59 @@
 
 ## 部署方式
 
-### 前置要求
+### 方式一：本地部署
 
-- Cloudflare 账户
+#### 前置要求
+
+- Node.js >= 16.0.0
 - NVIDIA API 密钥（可从 [NVIDIA NGC](https://ngc.nvidia.com/) 获取）
 
-### 部署步骤
+#### 安装和运行
+
+```bash
+# 克隆项目
+git clone https://github.com/yourusername/nvproxyjs.git
+cd nvproxyjs
+
+# 安装依赖
+npm install
+
+# 配置环境变量
+cp .env.example .env
+# 编辑 .env 文件，填入您的 NVIDIA API 密钥
+
+# 启动服务
+npm start
+```
+
+服务将在 `http://localhost:3000` 启动。
+
+#### Docker 部署
+
+```bash
+# 构建镜像
+npm run docker:build
+
+# 运行容器
+npm run docker:run
+
+# 或手动运行
+docker run -p 3000:3000 \
+  -e NV_KEY_1=your_key_1 \
+  -e NV_KEY_2=your_key_2 \
+  -e KEY_COUNT=2 \
+  nvproxyjs
+```
+
+### 方式二：Cloudflare Workers 部署
+
+#### 前置要求
+
+- Cloudflare 账户
+- Node.js >= 16.0.0
+- NVIDIA API 密钥（可从 [NVIDIA NGC](https://ngc.nvidia.com/) 获取）
+
+#### 部署步骤
 
 1. **克隆项目**
    ```bash
@@ -39,7 +86,7 @@
 
 4. **配置环境变量**
 
-   创建 `wrangler.toml` 文件并配置以下环境变量：
+   编辑 `wrangler.toml` 文件并配置以下环境变量：
 
    ```toml
    name = "nvproxyjs"
@@ -55,10 +102,6 @@
    MAX_CONCURRENCY = "2"
    # 最大 Token 数量（0 表示不限制）
    MAXTOKEN = "0"
-
-   [[kv_namespaces]]
-   binding = "KV_NAMESPACE"
-   id = "your_kv_namespace_id"
    ```
 
 5. **设置密钥**
