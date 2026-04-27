@@ -1,22 +1,81 @@
-name = "nvproxyjs"
+# Cloudflare Worker 配置文件
+# 文档: https://developers.cloudflare.com/workers/wrangler/configuration/
+
+name = "nvidia-api-proxy"
 main = "index.js"
 compatibility_date = "2024-01-01"
 
+# 账户配置
+# account_id = "your-account-id"
+
+# 环境变量（生产环境）
 [vars]
-# 密钥配置前缀
-KEY_PREFIX = "NV_KEY_"
-# 密钥数量
-KEY_COUNT = "3"
-# 最大并发数
-MAX_CONCURRENCY = "2"
-# 最大 Token 数量（0 表示不限制）
-MAXTOKEN = "0"
+# NVIDIA_BASE = "https://integrate.api.nvidia.com"
+# KEY_PREFIX = "NV_KEY_"
+# KEY_COUNT = "3"
+# MAX_CONCURRENCY = "2"
+# MAX_RETRIES = "1"
+# DEFAULT_MAX_TOKENS = "4096"
+# REQUEST_TIMEOUT = "30000"
+# MAXTOKEN = "0"
 
-# 环境变量配置
-# 在部署前使用 wrangler secret put 命令设置以下密钥：
-# NV_KEY_1, NV_KEY_2, NV_KEY_3 - NVIDIA API 密钥
-# TOKEN_1, TOKEN_2 - 访问鉴权 Token（可选）
+# 密钥配置（请在 Cloudflare Dashboard 中设置，不要在此处提交）
+# [vars]
+# NV_KEY_1 = "your-nvidia-api-key-1"
+# NV_KEY_2 = "your-nvidia-api-key-2"
+# NV_KEY_3 = "your-nvidia-api-key-3"
 
+# 鉴权令牌（可选）
+# TOKEN_1 = "your-auth-token-1"
+# TOKEN_2 = "your-auth-token-2"
+
+# 开发环境配置
+[env.development]
+name = "nvidia-api-proxy-dev"
+
+# 测试环境配置
+[env.staging]
+name = "nvidia-api-proxy-staging"
+
+# 生产环境配置
+[env.production]
+name = "nvidia-api-proxy"
+
+# 路由配置（可选）
+# routes = [
+#   { pattern = "api.yourdomain.com/*", zone_name = "yourdomain.com" }
+# ]
+
+# 定时任务（可选）
+# [triggers]
+# crons = ["0 * * * *"]
+
+# 限制配置
+# [limits]
+# cpu_ms = 50
+
+# KV 命名空间绑定（可选）
 # [[kv_namespaces]]
-# binding = "KV_NAMESPACE"
-# id = "your_kv_namespace_id"
+# binding = "CACHE"
+# id = "your-kv-namespace-id"
+
+# D1 数据库绑定（可选）
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "nvidia-proxy-db"
+
+# R2 存储绑定（可选）
+# [[r2_buckets]]
+# binding = "BUCKET"
+# bucket_name = "nvidia-proxy-bucket"
+
+# 服务绑定（可选）
+# [[services]]
+# binding = "UPSTREAM"
+# service = "upstream-service"
+
+# 环境变量密钥（敏感信息）
+# 请使用 wrangler secret 命令设置：
+# wrangler secret put NV_KEY_1
+# wrangler secret put NV_KEY_2
+# wrangler secret put TOKEN_1
